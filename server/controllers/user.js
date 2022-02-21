@@ -166,6 +166,18 @@ exports.read = async (req, res) => {
   return res.json(req.profile);
 };
 
+exports.list = async (req, res) => {
+  User.find().exec((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Could not find any user",
+      });
+    }
+
+    res.json(data);
+  });
+};
+
 exports.update = (req, res) => {
   User.findOneAndUpdate(
     { _id: req.profile._id },
