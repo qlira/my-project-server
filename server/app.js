@@ -52,4 +52,7 @@ app.listen(PORT, () => {
 app.use("/users", require("./routes/userRouter"));
 app.use("/movies", require("./routes/movieRouter"));
 app.use("/category", require("./routes/categoryRouter"));
+app.use("/contact", require("./routes/contactRouter"));
 
+// const messageAPI = require('./routes/contactRouter.js')
+// app.use('/api', messageAPI)
