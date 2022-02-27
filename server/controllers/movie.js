@@ -12,6 +12,7 @@ exports.create = async (req, res) => {
 
   form.parse(req, (err, fields, files) => {
     console.log("hini2");
+    console.log(files);
 
     if (err) {
       console.log("hini3");
@@ -30,16 +31,19 @@ exports.create = async (req, res) => {
         error: "All fields are required",
       });
     }
+    console.log("testttt1");
 
     let movie = new Movie(fields);
     if (files.photo) {
+      console.log("testttt");
       if (files.photo.size > 2000000) {
         return res.status(400).json({
           error: "Image should be less than 2 MB in size",
         });
       }
-      movie.photo.data = fs.readFileSync(files.photo.path);
-      movie.photo.contentType = files.photo.type;
+      console.log(files.photo.path);
+      movie.photo.data = fs.readFileSync(files.photo.filepath);
+      movie.photo.contentType = files.photo.mimetype;
     }
 
     movie.save((err, result) => {
