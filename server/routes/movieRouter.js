@@ -16,8 +16,8 @@ const { userById } = require("../controllers/user");
 
 router.post("/create", create);
 router.get("/:movieId", read); //ka qene auth para read
-router.delete("/:movieId", auth, remove);
-router.put("/:movieId", auth, update);
+router.delete("/:movieId", remove);
+router.put("/:movieId", update);
 
 router.get("/", list);
 router.get("/related/:movieId", listRelated);
