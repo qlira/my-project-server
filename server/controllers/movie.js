@@ -104,40 +104,34 @@ exports.update = async (req, res) => {
 
     const { title, description, price, category, rating } = fields;
     console.log("updatedFields", fields);
-    console.log("Hini1");
 
     if (!title || !description || !price || !category || !rating) {
       return res.status(400).json({
         error: "All fields are required",
       });
     }
-    console.log("Hini111");
 
     let movie = req.movie;
     movie = _.extend(movie, fields);
-    console.log("Hini2");
 
-    console.log(files.photo);
+    console.log(files);
 
     if (files.photo) {
-      console.log("Hini222");
-
       if (files.photo.size > 2000000) {
         return res.status(400).json({
           error: "Image should be less than 2 MB in size",
         });
       }
-      console.log("Hini3");
 
       console.log(files.photo.path);
 
       movie.photo.data = fs.readFileSync(files.photo.filepath);
       movie.photo.contentType = files.photo.mimetype;
     }
-    console.log("Hini4");
 
     movie.save((err, result) => {
       if (err) {
+        console.log("err", err);
         return res.status(400).json({
           error: "Movie update failed",
         });
