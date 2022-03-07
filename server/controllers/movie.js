@@ -152,7 +152,6 @@ exports.update = async (req, res) => {
 exports.list = async (req, res) => {
   let order = req.query.order ? req.query.order : "asc";
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
-  let page = req.query.page;
 
   Movie.find()
     .select("-photo")
@@ -166,6 +165,21 @@ exports.list = async (req, res) => {
       }
 
       res.send(data);
+    });
+};
+exports.paginatedList = async (req, res) => {
+  const page = parseInt(req.query.page);
+  const limit = 9;
+
+  Movie.find({ where: page, limit })
+    .then((data) => {
+      const response = page;
+      res.send(response);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving movies.",
+      });
     });
 };
 
