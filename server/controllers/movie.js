@@ -152,6 +152,7 @@ exports.update = async (req, res) => {
 exports.list = async (req, res) => {
   let order = req.query.order ? req.query.order : "asc";
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+  let page = req.query.page;
 
   Movie.find()
     .select("-photo")
