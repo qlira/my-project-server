@@ -16,4 +16,4 @@ const contactSchema = new Schema({
     maxlength:300
   },
 });
-module.exports = Contact = mongoose.model("Contact", contactSchema);
+module.exports = User = mongoose.model("Contact", contactSchema);
