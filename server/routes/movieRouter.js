@@ -10,9 +10,12 @@ const {
   list,
   listRelated,
   listCategories,
+  paginatedList,
   photo,
 } = require("../controllers/movie");
 const { userById } = require("../controllers/user");
+
+router.get("/moviePagination", paginatedList);
 
 router.post("/create", create);
 router.get("/:movieId", read); //ka qene auth para read

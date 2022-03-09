@@ -64,7 +64,7 @@ exports.movieById = async (req, res, next, id) => {
     .exec((err, movie) => {
       if (err || !movie) {
         return res.status(400).json({
-          error: "Movie not found",
+          error: "Movie not found1",
         });
       }
       req.movie = movie;
@@ -169,17 +169,16 @@ exports.list = async (req, res) => {
 };
 exports.paginatedList = async (req, res) => {
   const page = parseInt(req.query.page);
-  const limit = 9;
-
-  Movie.find({ where: page, limit })
+  const limit = 3;
+  const offset = (page - 1) * limit;
+  console.log(page);
+  Movie.find()
+    .select("-photo")
+    .populate("category")
+    .limit(limit)
+    .skip(offset)
     .then((data) => {
-      const response = page;
-      res.send(response);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving movies.",
-      });
+      res.send(data);
     });
 };
 
