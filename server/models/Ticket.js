@@ -8,14 +8,14 @@ const ticketSchema = new Schema({
     type: Number,
     trim: true,
     required: true,
-    maxlength: 32,
+    maxlength: 5,
+    minlength: 1,
   },
-  totalPrice: {
-    type: Number,
-    trim: true,
-    required: true,
-    maxlength: 32,
-  },
+  // totalPrice: {
+  //   type: String,
+  //   trim: true,
+  //   required: true,
+  // },
   user: {
     type: ObjectId,
     ref: "User",

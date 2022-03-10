@@ -54,5 +54,4 @@ app.use("/movies", require("./routes/movieRouter"));
 app.use("/category", require("./routes/categoryRouter"));
 app.use("/contacts", require("./routes/contactRouter"));
 app.use("/tickets", require("./routes/ticketRouter"));
-// const messageAPI = require('./routes/contactRouter.js')
-// app.use('/api', messageAPI)
+
