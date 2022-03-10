@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const auth = require("../middleware/auth");
 
+const { list, create } = require("../controllers/ticket");
 
-const {} = require("../controllers/contact");
+router.get("/", list);
+router.post("/create", create);
 
 module.exports = router;
