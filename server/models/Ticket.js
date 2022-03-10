@@ -11,11 +11,11 @@ const ticketSchema = new Schema({
     maxlength: 5,
     minlength: 1,
   },
-  // totalPrice: {
-  //   type: String,
-  //   trim: true,
-  //   required: true,
-  // },
+  totalPrice: {
+    type: String,
+    trim: true,
+    required: true,
+  },
   user: {
     type: ObjectId,
     ref: "User",
