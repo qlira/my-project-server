@@ -8,10 +8,10 @@ const {
     ticketById,
   } = require("../controllers/Ticket");
 
-const { list, create, update } = require("../controllers/ticket");
 
 router.get("/", list);
 router.post("/create", create);
 router.put("/:ticketId", update);
+router.param("ticketId", ticketById);
 
 module.exports = router;
