@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const auth = require("../middleware/auth");
 
-const { list, create } = require("../controllers/ticket");
+const { list, create, update } = require("../controllers/ticket");
 
 router.get("/", list);
 router.post("/create", create);
+router.put("/:ticketId", update);
 
 module.exports = router;

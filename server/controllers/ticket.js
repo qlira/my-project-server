@@ -1,12 +1,30 @@
 const Ticket = require("../models/Ticket");
+const _ = require("lodash");
 
 exports.create = async (req, res) => {
   const ticket = new Ticket(req.body);
+  console.log("hini1", ticket);
   ticket.save((err, data) => {
     if (err) {
       return res.status(400).json({ msg: "Error" });
     }
     res.json({ data });
+  });
+};
+
+exports.update = async (req, res) => {
+  let ticket = req.ticket;
+  ticket = _.extend(ticket, fields);
+
+  ticket.save((err, result) => {
+    if (err) {
+      console.log("err", err);
+      return res.status(400).json({
+        error: "Ticket update failed",
+      });
+    }
+
+    res.json(result);
   });
 };
 

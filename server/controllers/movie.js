@@ -11,9 +11,6 @@ exports.create = async (req, res) => {
   console.log("hini1");
 
   form.parse(req, (err, fields, files) => {
-    console.log("hini2");
-    console.log(files);
-
     if (err) {
       console.log("hini3");
 
@@ -21,27 +18,24 @@ exports.create = async (req, res) => {
         error: "Image could not be uploaded",
       });
     }
-    console.log("hini4");
 
     const { title, description, price, category, rating } = fields;
-    console.log(fields);
 
     if (!title || !description || !price || !category || !rating) {
       return res.status(400).json({
         error: "All fields are required",
       });
     }
-    console.log("testttt1");
+
+    console.log("category", fields);
 
     let movie = new Movie(fields);
     if (files.photo) {
-      console.log("testttt");
       if (files.photo.size > 2000000) {
         return res.status(400).json({
           error: "Image should be less than 2 MB in size",
         });
       }
-      console.log(files.photo.path);
       movie.photo.data = fs.readFileSync(files.photo.filepath);
       movie.photo.contentType = files.photo.mimetype;
     }
@@ -110,12 +104,9 @@ exports.update = async (req, res) => {
         error: "All fields are required",
       });
     }
-
+    console.log("req", req);
     let movie = req.movie;
     movie = _.extend(movie, fields);
-
-    console.log(files);
-
     if (files.photo) {
       if (files.photo.size > 2000000) {
         return res.status(400).json({
