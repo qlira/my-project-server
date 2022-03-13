@@ -32,17 +32,45 @@ exports.list = async (req, res) => {
   let order = req.query.order ? req.query.order : "asc";
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
 
-  Ticket.find()
-    .populate("movie")
-    .populate("user")
-    .sort([[sortBy, order]])
-    .exec((err, data) => {
+  exports.remove = async (req, res) => {
+    let ticket = req.ticket;
+    ticket.remove((err, data) => {
       if (err) {
         return res.status(400).json({
-          error: "Tickets not found",
+          error: "Ticket removing failed",
         });
       }
-
-      res.send(data);
+  
+      res.json({
+        message: "Ticket deleted successfully",
+      });
     });
-};
+  };
+  
+  exports.update = async (req, res) => {
+    const ticket = req.ticket;
+    ticket.quantity = req.body.quantity
+    ticket.totalPrice = req.body.totalPrice
+    ticket.user = req.body.user;
+    ticket.movie = req.body.movie;
+    ticket.save((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Ticket could not be updated",
+        });
+      }
+      res.json(data);
+    });
+  };
+
+  exports.list = async (req, res) => {
+    Ticket.find().exec((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Could not find any ticket",
+        });
+      }
+  
+      res.json(data);
+    });
+  };
