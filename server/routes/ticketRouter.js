@@ -12,6 +12,7 @@ const {
 router.get("/", list);
 router.post("/create", create);
 router.put("/:ticketId", update);
+router.delete("/:ticketId", remove)
 router.param("ticketId", ticketById);
 
 module.exports = router;
