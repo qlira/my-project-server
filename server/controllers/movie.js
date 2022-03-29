@@ -133,12 +133,7 @@ exports.update = async (req, res) => {
   });
 };
 
-/*
-    sell / arrival
-    by sell = /movies?sortBy=sold&order=desc&limit=4
-    by arrivals = /movies?sortBy=createdAt&order=desc&limit=4
-    if no params are sent, then all movies are returned
-*/
+
 
 exports.list = async (req, res) => {
   let order = req.query.order ? req.query.order : "asc";
@@ -160,7 +155,7 @@ exports.list = async (req, res) => {
 };
 exports.paginatedList = async (req, res) => {
   const page = parseInt(req.query.page);
-  const limit = 3;
+  const limit = 4;
   const offset = (page - 1) * limit;
   console.log(page);
   Movie.find()
@@ -173,10 +168,7 @@ exports.paginatedList = async (req, res) => {
     });
 };
 
-/*
-    it will find movies based on the req movie category
-    other movies that has the same category, will be returned
-*/
+
 
 exports.listRelated = async (req, res) => {
   let limit = 4;
@@ -206,58 +198,6 @@ exports.listCategories = async (req, res) => {
   });
 };
 
-/**
- * list movies by search
- * we will implement product search in react frontend
- * we will show categories in checkbox and price range in radio buttons
- * as the user clicks on those checkbox and radio buttons
- * we will make api request and show the products to users based on what he wants
- */
-
-// exports.listBySearch = async (req, res) => {
-//     let order = req.body.order ? req.body.order : "desc";
-//     let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
-//     let limit = req.body.limit ? parseInt(req.body.limit) : 100;
-//     let skip = parseInt(req.body.skip);
-//     let findArgs = {};
-
-//     // console.log(order, sortBy, limit, skip, req.body.filters);
-//     // console.log("findArgs", findArgs);
-
-//     for (let key in req.body.filters) {
-//         if (req.body.filters[key].length > 0) {
-//             if (key === "price") {
-//                 // gte -  greater than price [0-10]
-//                 // lte - less than
-//                 findArgs[key] = {
-//                     $gte: req.body.filters[key][0],
-//                     $lte: req.body.filters[key][1]
-//                 };
-//             } else {
-//                 findArgs[key] = req.body.filters[key];
-//             }
-//         }
-//     }
-
-//     await Movie.find(findArgs)
-//         .select("-photo")
-//         .populate("category")
-//         .sort([[sortBy, order]])
-//         .skip(skip)
-//         .limit(limit)
-//         .exec((err, data) => {
-//             if (err) {
-//                 return res.status(400).json({
-//                     error: "Movies not found"
-//                 });
-//             }
-//             res.json({
-//                 size: data.length,
-//                 data
-//             });
-//         });
-// };
-
 exports.photo = async (req, res, next) => {
   if (req.movie.photo.data) {
     res.set("Content-Type", req.movie.photo.contentType);
@@ -266,43 +206,3 @@ exports.photo = async (req, res, next) => {
   next();
 };
 
-// exports.listSearch = async (req, res) => {
-//     const query = {};
-//     if(req.query.search){
-//         query.title = {$regex: req.query.search, $options: 'i'}
-//         if(req.query.category && req.query.caregory != 'All'){
-//             query.category = req.query.category
-//         }
-
-//         await Movie.find(query, (err, movies) => {
-//             if(err){
-//                 return res.status(400).json({
-//                     error: errorHandler(err)
-//                 })
-//             }
-//             res.json(movies);
-//         }).select('-photo');
-//     }else{
-//         console.log("keq")
-//     }
-// }
-
-// exports.decreaseQuantity = (req, res, next) => {
-//     let bulkOps = req.body.order.movies.map(item => {
-//         return {
-//             updateOne:{
-//                 filter: { _id: item._id },
-//                 update: { $inc: { quantity: -item.count, sold: +item.count} }
-//             }
-//         }
-//     });
-
-//     Product.bulkWrite(bulkOps, {}, (error, movies) => {
-//         if(error){
-//             return res.status(400).json({
-//                 error: "Could not update movie"
-//             });
-//         }
-//         next();
-//     });
-// };
